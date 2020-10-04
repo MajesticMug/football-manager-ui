@@ -57,11 +57,18 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
+    <Folder Include="StoredProcedures" />
+    <Folder Include="Types" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\dbo.Competition.sql" />
     <Build Include="Tables\dbo.CompetitionTeam.sql" />
     <Build Include="Tables\dbo.Player.sql" />
     <Build Include="Tables\dbo.Team.sql" />
+    <Build Include="Tables\dbo.TeamPlayer.sql" />
+    <Build Include="StoredProcedures\dbo.SaveCompetition.sql" />
+    <Build Include="StoredProcedures\dbo.SaveTeam.sql" />
+    <Build Include="Types\dbo.PlayerType.sql" />
+    <Build Include="Types\dbo.TeamType.sql" />
   </ItemGroup>
 </Project>

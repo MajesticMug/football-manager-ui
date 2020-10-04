@@ -11,10 +11,11 @@ namespace Football.Api.Mappers
             CreateMap<CompetitionDto, Competition>()
                 .ForMember(competition => competition.Id, expression => expression.Ignore());
 
+            // Transform external Ids into Codes
             CreateMap<TeamDto, Team>()
-                .ForMember(team => team.Id, expression => expression.Ignore());
+                .ForMember(team => team.Id, expression => expression.Ignore())
+                .ForMember(team => team.Code, expression => expression.MapFrom(dto => dto.Id.ToString()));
 
-            // Transform SquadMemberDto.Id into Player.Code to keep a unique identifier for Players
             CreateMap<SquadMemberDto, Player>()
                 .ForMember(player => player.Id, expression => expression.Ignore())
                 .ForMember(player => player.Code, expression => expression.MapFrom(dto => dto.Id.ToString()));

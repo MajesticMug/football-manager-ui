@@ -17,16 +17,51 @@ namespace Football.Api.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Table Names
+            modelBuilder.Entity<Competition>().ToTable("Competition");
+            modelBuilder.Entity<CompetitionTeam>().ToTable("CompetitionTeam");
+            modelBuilder.Entity<Team>().ToTable("Team");
+            modelBuilder.Entity<Player>().ToTable("Player");
+
             // Primary Keys
             modelBuilder.Entity<Player>().HasKey(player => player.Id);
             modelBuilder.Entity<Team>().HasKey(team => team.Id);
             modelBuilder.Entity<Competition>().HasKey(competition => competition.Id);
-            modelBuilder.Entity<CompetitionTeam>().HasKey(competitionTeam => new { competitionTeam.CompetitionId, competitionTeam.TeamId });
+            modelBuilder.Entity<CompetitionTeam>().HasKey(competitionTeam => new {competitionTeam.TeamId, competitionTeam.CompetitionId});
+            modelBuilder.Entity<TeamPlayer>().HasKey(teamPlayer => new {teamPlayer.TeamId, teamPlayer.PlayerId});
+
+            // Indexes
+            modelBuilder.Entity<Competition>().HasIndex(competition => competition.Code).IsUnique();
+            modelBuilder.Entity<Team>().HasIndex(team => team.Code).IsUnique();
+            modelBuilder.Entity<Player>().HasIndex(player => player.Code).IsUnique();
 
             // Foreign keys
-            modelBuilder.Entity<Player>().HasOne<Team>().WithMany(team => team.Players);
-            modelBuilder.Entity<CompetitionTeam>().HasOne<Competition>().WithMany(competition => competition.CompetitionTeams);
-            modelBuilder.Entity<CompetitionTeam>().HasOne<Team>().WithMany(team => team.CompetitionTeams);
+            modelBuilder
+                .Entity<CompetitionTeam>()
+                .HasOne(ct => ct.Competition)
+                .WithMany(c => c.CompetitionTeams)
+                .HasForeignKey(ct => ct.CompetitionId);
+
+            modelBuilder
+                .Entity<CompetitionTeam>()
+                .HasOne(ct => ct.Team)
+                .WithMany(t => t.CompetitionTeams)
+                .HasForeignKey(ct => ct.TeamId);
+
+            modelBuilder
+                .Entity<TeamPlayer>()
+                .HasOne(teamPlayer => teamPlayer.Team)
+                .WithMany(team => team.TeamPlayers)
+                .HasForeignKey(teamPlayer => teamPlayer.TeamId);
+
+            modelBuilder
+                .Entity<TeamPlayer>()
+                .HasOne(teamPlayer => teamPlayer.Player)
+                .WithMany(player => player.TeamPlayers)
+                .HasForeignKey(teamPlayer => teamPlayer.PlayerId);
+
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

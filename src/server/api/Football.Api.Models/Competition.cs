@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Football.Api.Models
 {
@@ -9,6 +10,6 @@ namespace Football.Api.Models
         public string Code { get; set; }
         public string AreaName { get; set; }
 
-        public CompetitionTeam[] CompetitionTeams { get; set; }
+        public List<CompetitionTeam> CompetitionTeams { get; set; }
     }
 }

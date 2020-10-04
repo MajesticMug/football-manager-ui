@@ -60,6 +60,10 @@ namespace Football.Api.Site
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("AllowAll");
+
+            app.UseFootballApi();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
