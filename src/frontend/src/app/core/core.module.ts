@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 
-// import { BASE_PATH } from '../api/index';
+import { BASE_PATH } from '../api/index';
 import { environment } from './../../environments/environment';
 import {
   FooterComponent,
@@ -38,7 +38,7 @@ import {
   exports: [NavComponent],
   providers: [
     NavService,
-    // { provide: BASE_PATH, useValue: environment.peopleApiBasePath },
+    { provide: BASE_PATH, useValue: environment.peopleApiBasePath },
   ],
 })
 export class CoreModule {}

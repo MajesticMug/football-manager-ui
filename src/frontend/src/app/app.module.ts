@@ -11,10 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/index';
 import { SharedModule } from './shared/index';
+import { CompetitionsComponent } from './competitions/competitions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    CompetitionsComponent,
   ],
   imports: [
     BrowserModule,

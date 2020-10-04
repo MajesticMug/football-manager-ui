@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  peopleApiBasePath: 'http://localhost:7677',
+  peopleApiBasePath: 'http://localhost:63735',
 };
 
 /*

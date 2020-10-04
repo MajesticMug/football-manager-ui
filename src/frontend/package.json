@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "gen-api": "openapi-generator generate -i http://localhost:7677/swagger/v1/swagger.json -g typescript-angular --skip-validate-spec -o src/app/api --type-mappings=DateTime=Date --type-mappings=AnyType=any"
+    "gen-api": "openapi-generator generate -i http://localhost:63735/swagger/v1/swagger.json -g typescript-angular --skip-validate-spec -o src/app/api --type-mappings=DateTime=Date --type-mappings=AnyType=any"
   },
   "private": true,
   "dependencies": {

@@ -27,12 +27,12 @@ export class NavService {
   getNavLinks(): NavLink[] {
     return [
       {
-        name: 'Football Manager',
+        name: 'Competitions',
         route: '.',
       },
       {
-        name: 'Root Ascendant',
-        route: 'root-ascendant',
+        name: 'Teams',
+        route: 'teams:competitionId',
       },
     ];
   }
