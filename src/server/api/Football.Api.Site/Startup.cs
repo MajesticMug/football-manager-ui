@@ -1,3 +1,5 @@
+using Football.Api.Extensions;
+using Football.Api.Repositories.Extensions;
 using Football.Api.ServiceClient.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +24,8 @@ namespace Football.Api.Site
         {
             services.AddControllers();
 
+            services.AddFootballApi();
+
             services.AddMvc();
 
             services.AddCors(options =>
@@ -39,6 +43,8 @@ namespace Football.Api.Site
 
             services.AddFootballDataApiClient(Configuration["ApiClient:FootballData:BaseAddress"], Configuration["ApiClient:FootballData:Token"]);
 
+            services.AddFootballApiEntityFrameworkCore(Configuration.GetConnectionString("Football"));
+
             // Add Swagger
             services.AddSwaggerGen(c =>
             {
@@ -53,6 +59,10 @@ namespace Football.Api.Site
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowAll");
+
+            app.UseFootballApi();
 
             app.UseHttpsRedirection();
 
