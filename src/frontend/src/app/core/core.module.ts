@@ -38,7 +38,7 @@ import {
   exports: [NavComponent],
   providers: [
     NavService,
-    { provide: BASE_PATH, useValue: environment.peopleApiBasePath },
+    { provide: BASE_PATH, useValue: environment.footballApiBasePath },
   ],
 })
 export class CoreModule {}
