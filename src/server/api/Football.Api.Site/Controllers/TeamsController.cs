@@ -18,12 +18,15 @@ namespace Football.Api.Site.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("{leagueCode}")]
         [ProducesResponseType(200, Type = typeof(Team[]))]
         [ProducesResponseType(404, Type = typeof(MessageResponse))]
-        public async Task<IActionResult> GetTeamsByLeagueCode(GetTeamsByLeagueCodeQuery query)
+        public async Task<IActionResult> GetTeamsByLeagueCode([FromRoute] string leagueCode)
         {
-            return Ok(await _mediator.Send(query));
+            return Ok(await _mediator.Send(new GetTeamsByLeagueCodeQuery
+            {
+                LeagueCode = leagueCode
+            }));
         }
     }
 }

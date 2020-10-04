@@ -18,18 +18,15 @@ namespace Football.Api.CommandHandlers
         private readonly IFootballDataApiClient _apiClient;
         private readonly IMapper _mapper;
         private readonly ICompetitionRepository _competitionRepository;
-        private readonly ITeamRepository _teamRepository;
 
         public ImportLeagueCommandHandler(
             IFootballDataApiClient apiClient, 
             IMapper mapper,
-            ICompetitionRepository competitionRepository, 
-            ITeamRepository teamRepository)
+            ICompetitionRepository competitionRepository)
         {
             _apiClient = apiClient;
             _mapper = mapper;
             _competitionRepository = competitionRepository;
-            _teamRepository = teamRepository;
         }
 
         public async Task<Unit> Handle(ImportLeagueCommand request, CancellationToken cancellationToken)
@@ -44,6 +41,11 @@ namespace Football.Api.CommandHandlers
                 }
 
                 var competitionDto = await _apiClient.GetCompetitionByLeagueCodeAsync(request.LeagueCode);
+
+                if (competitionDto == null)
+                {
+                    throw new LeagueNotFoundException();
+                }
 
                 var teamDtos = await _apiClient.GetTeamsByCompetition(competitionDto.Id);
 
