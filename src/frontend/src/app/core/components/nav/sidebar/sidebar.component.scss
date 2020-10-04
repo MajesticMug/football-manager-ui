@@ -1,0 +1,30 @@
+@import '../../../styles/variables';
+
+:host {
+  height: 100%;
+  overflow: hidden;
+}
+
+.sidenavContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.sidenav {
+  width: $sideBar-width;
+  min-width: $sideBar-minWidth;
+}
+
+.navList {
+  .navListItem {
+    border-bottom: 1px solid grey;
+
+    &--active {
+      color: $color-activeNavLink;
+    }
+  }
+
+  .navListItem:last-child {
+    border-bottom: 0;
+  }
+}

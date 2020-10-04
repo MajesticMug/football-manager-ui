@@ -1,0 +1,19 @@
+<mat-sidenav-container class="sidenavContainer">
+
+  <mat-sidenav mode="side" class="sidenav">
+    <mat-nav-list class="navList">
+      <mat-list-item *ngFor="let navLink of navLinks"
+          [routerLink]="navLink.route"
+          (click)="setActiveLink(navLink)"
+          class="navListItem"
+          [class.navListItem--active]="(activeLink$ | async)?.route === navLink.route">
+        <a> {{ navLink.name }} </a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
