@@ -1,17 +1,18 @@
 ﻿using System;
 
-namespace Football.Api.Model
+namespace Football.Api.Models
 {
     public class Player
     {
-        public int PlayerId { get; set; }
+        public int Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string Position { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string CountryOfBirth { get; set; }
         public string Nationality { get; set; }
-        public string Role { get; set; }
 
+        public int TeamId { get; set; }
         public Team Team { get; set; }
     }
 }
