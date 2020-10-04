@@ -28,7 +28,6 @@ namespace Football.Api.Repositories
             modelBuilder.Entity<Team>().HasKey(team => team.Id);
             modelBuilder.Entity<Competition>().HasKey(competition => competition.Id);
             modelBuilder.Entity<CompetitionTeam>().HasKey(competitionTeam => new {competitionTeam.TeamId, competitionTeam.CompetitionId});
-            modelBuilder.Entity<TeamPlayer>().HasKey(teamPlayer => new {teamPlayer.TeamId, teamPlayer.PlayerId});
 
             // Indexes
             modelBuilder.Entity<Competition>().HasIndex(competition => competition.Code).IsUnique();
@@ -49,16 +48,15 @@ namespace Football.Api.Repositories
                 .HasForeignKey(ct => ct.TeamId);
 
             modelBuilder
-                .Entity<TeamPlayer>()
-                .HasOne(teamPlayer => teamPlayer.Team)
-                .WithMany(team => team.TeamPlayers)
-                .HasForeignKey(teamPlayer => teamPlayer.TeamId);
+                .Entity<Player>()
+                .HasOne<Team>()
+                .WithMany(team => team.Players)
+                .HasForeignKey(player => player.TeamId);
 
+            // Misc
             modelBuilder
-                .Entity<TeamPlayer>()
-                .HasOne(teamPlayer => teamPlayer.Player)
-                .WithMany(player => player.TeamPlayers)
-                .HasForeignKey(teamPlayer => teamPlayer.PlayerId);
+                .Entity<Player>()
+                .Ignore(player => player.TeamCode);
 
 
             base.OnModelCreating(modelBuilder);

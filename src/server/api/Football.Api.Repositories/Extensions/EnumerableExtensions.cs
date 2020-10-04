@@ -31,6 +31,7 @@ namespace Football.Api.Repositories.Extensions
             var dt = new DataTable();
 
             dt.Columns.Add("Code", typeof(string));
+            dt.Columns.Add("TeamCode", typeof(string));
             dt.Columns.Add("Name", typeof(string));
             dt.Columns.Add("Position", typeof(string));
             dt.Columns.Add("DateOfBirth", typeof(DateTime));
@@ -39,7 +40,7 @@ namespace Football.Api.Repositories.Extensions
 
             foreach (var player in players)
             {
-                dt.Rows.Add(player.Code, player.Name, player.Position, player.DateOfBirth,
+                dt.Rows.Add(player.Code, player.TeamCode, player.Name, player.Position, player.DateOfBirth,
                     player.CountryOfBirth, player.Nationality);
             }
 

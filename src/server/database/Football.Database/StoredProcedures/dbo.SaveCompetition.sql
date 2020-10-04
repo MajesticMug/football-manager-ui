@@ -3,6 +3,7 @@ CREATE PROCEDURE dbo.SaveCompetition
     @Code VARCHAR(20),
     @Name VARCHAR(125),
     @Teams TeamType READONLY,
+    @Players PlayerType READONLY,
     @AreaName VARCHAR(125) = NULL,
     @CompetitionId INT OUTPUT
 )
@@ -50,11 +51,34 @@ BEGIN
             [CompetitionId],
             [TeamId]
     )
-    SELECT  DISTINCT
-            @CompetitionId,
+    SELECT  @CompetitionId,
             [existingTeam].[Id]
     FROM    @Teams t
 
     JOIN    [dbo].[Team] existingTeam
     ON      [existingTeam].[Code] = [t].[Code]
+
+
+    --      Insert Players
+    INSERT  INTO [dbo].[Player]
+    (
+            [TeamId],
+            [Code],
+            [Name],
+            [Position],
+            [DateOfBirth],
+            [CountryOfBirth],
+            [Nationality]
+    )
+    SELECT  [t].[Id],
+            [p].[Code],
+            [p].[Name],
+            [p].[Position],
+            [p].[DateOfBirth],
+            [p].[CountryOfBirth],
+            [p].[Nationality]
+    FROM    @Players p
+
+    JOIN    [dbo].[Team] t
+    ON      [t].[Code] = p.[TeamCode]
 END

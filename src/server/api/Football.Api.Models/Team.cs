@@ -13,7 +13,7 @@ namespace Football.Api.Models
         public string AreaName { get; set; }
 
         public List<CompetitionTeam> CompetitionTeams { get; set; }
-        public List<TeamPlayer> TeamPlayers { get; set; }
+        public List<Player> Players { get; set; }
 
         public override bool Equals(object obj)
         {

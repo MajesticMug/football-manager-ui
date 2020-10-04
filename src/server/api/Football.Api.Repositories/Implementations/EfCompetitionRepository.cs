@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Football.Api.Models;
 using Football.Api.Repositories.Extensions;
@@ -10,11 +11,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Football.Api.Repositories.Implementations
 {
-    public class CompetitionRepository : ICompetitionRepository
+    public class EfCompetitionRepository : ICompetitionRepository
     {
         private readonly FootballDbContext _dbContext;
 
-        public CompetitionRepository(FootballDbContext dbContext)
+        public EfCompetitionRepository(FootballDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -36,15 +37,40 @@ namespace Football.Api.Repositories.Implementations
                 TypeName = "dbo.TeamType"
             };
 
+            var playersParam = new SqlParameter("Players", SqlDbType.Structured)
+            {
+                Value = GetTeamPlayers(teams).ToDataTable(),
+                TypeName = "dbo.PlayerType"
+            };
+
             var competitionId = new SqlParameter("CompetitionId", SqlDbType.Int)
             {
                 Direction = ParameterDirection.Output
             };
 
-            await _dbContext.Database.ExecuteSqlRawAsync("dbo.SaveCompetition @Code, @Name, @Teams, @AreaName, @CompetitionId OUT",
-                code, name, teamsParam, areaName, competitionId);
+            await _dbContext.Database.ExecuteSqlRawAsync("dbo.SaveCompetition @Code, @Name, @Teams, @Players, @AreaName, @CompetitionId OUT",
+                code, name, teamsParam, playersParam, areaName, competitionId);
 
             competition.Id = Convert.ToInt32(competitionId.Value);
+        }
+
+        public async Task<List<Competition>> GetAllCompetitionsAsync()
+        {
+            return await _dbContext.Competitions.ToListAsync();
+        }
+
+        private List<Player> GetTeamPlayers(List<Team> teams)
+        {
+            foreach (var team in teams)
+            {
+                // Assign TeamCode to each Player needed for the database Type
+                foreach (var player in team.Players)
+                {
+                    player.TeamCode = team.Code;
+                }
+            }
+
+            return teams.SelectMany(team => team.Players).ToList();
         }
     }
 }

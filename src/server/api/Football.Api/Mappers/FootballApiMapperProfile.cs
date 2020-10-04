@@ -14,6 +14,7 @@ namespace Football.Api.Mappers
             // Transform external Ids into Codes
             CreateMap<TeamDto, Team>()
                 .ForMember(team => team.Id, expression => expression.Ignore())
+                .ForMember(team => team.Players, expression => expression.MapFrom(dto => dto.Squad))
                 .ForMember(team => team.Code, expression => expression.MapFrom(dto => dto.Id.ToString()));
 
             CreateMap<SquadMemberDto, Player>()

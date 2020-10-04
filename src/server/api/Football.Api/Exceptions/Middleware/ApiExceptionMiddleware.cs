@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Football.Api.Exceptions.Base;
+using Football.Api.ResponseModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -33,7 +34,10 @@ namespace Football.Api.Exceptions.Middleware
                 context.Response.StatusCode = (int) apiException.GetStatusCode();
                 context.Response.ContentType = @"application/json";
 
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(new { message = apiException.Message }));
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(new MessageResponse
+                {
+                    Message = apiException.Message
+                }));
             }
         }
     }

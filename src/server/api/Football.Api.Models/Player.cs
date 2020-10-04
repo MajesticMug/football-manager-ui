@@ -13,7 +13,10 @@ namespace Football.Api.Models
         public string CountryOfBirth { get; set; }
         public string Nationality { get; set; }
 
-        public List<TeamPlayer> TeamPlayers { get; set; }
+        public int TeamId { get; set; }
+        public Team Team { get; set; }
+
+        public string TeamCode { get; set; }
 
         public override bool Equals(object obj)
         {

@@ -1,8 +1,6 @@
 ﻿using System.Reflection;
 using AutoMapper;
 using Football.Api.Mappers;
-using Football.Api.Repositories.Implementations;
-using Football.Api.Repositories.Interfaces;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,8 +13,6 @@ namespace Football.Api.Extensions
             AddAutoMapper(services);
 
             AddCqrs(services);
-
-            AddRepositories(services);
 
             return services;
         }
@@ -34,12 +30,6 @@ namespace Football.Api.Extensions
         {
             // Register request and command handlers using MediatR
             services.AddMediatR(Assembly.GetExecutingAssembly());
-        }
-
-        private static void AddRepositories(IServiceCollection services)
-        {
-            services.AddTransient<ICompetitionRepository, CompetitionRepository>();
-            services.AddTransient<ITeamRepository, TeamRepository>();
         }
     }
 }

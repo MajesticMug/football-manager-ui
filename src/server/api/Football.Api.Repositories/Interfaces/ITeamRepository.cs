@@ -6,6 +6,7 @@ namespace Football.Api.Repositories.Interfaces
 {
     public interface ITeamRepository
     {
-        Task SaveTeamAsync(string teamCode, List<Player> players);
+        Task SaveTeamPlayersAsync(string teamCode, List<Player> players);
+        Task<List<Team>> GetTeamsByCompetitionIdAsync(int competitionId);
     }
 }

@@ -1,16 +1,27 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Football.Api.Queries;
+using Football.Api.Repositories.Interfaces;
+using Football.Api.ResponseModels;
 using MediatR;
 
 namespace Football.Api.QueryHandlers
 {
-    public class GetTotalPlayersByLeagueCodeQueryHandler : IRequestHandler<GetTotalPlayersByLeagueCodeQuery, int>
+    public class GetTotalPlayersByLeagueCodeQueryHandler : IRequestHandler<GetTotalPlayersByLeagueCodeQuery, TotalPlayersResponse>
     {
-        public Task<int> Handle(GetTotalPlayersByLeagueCodeQuery request, CancellationToken cancellationToken)
+        private readonly IPlayerRepository _playerRepository;
+
+        public GetTotalPlayersByLeagueCodeQueryHandler(IPlayerRepository playerRepository)
         {
-            // TODO
-            return Task.FromResult(100);
+            _playerRepository = playerRepository;
+        }
+
+        public async Task<TotalPlayersResponse> Handle(GetTotalPlayersByLeagueCodeQuery request, CancellationToken cancellationToken)
+        {
+            return new TotalPlayersResponse
+            {
+                Total = await _playerRepository.GetTotalPlayersByCompetitionCodeAsync(request.LeagueCode)
+            };
         }
     }
 }

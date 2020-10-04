@@ -8,6 +8,7 @@ namespace Football.Api.Repositories.Interfaces
     {
         Task<Competition> GetCompetitionByCodeAsync(string code);
         Task SaveCompetitionAsync(Competition competition, List<Team> teams);
+        Task<List<Competition>> GetAllCompetitionsAsync();
     }
 }
 

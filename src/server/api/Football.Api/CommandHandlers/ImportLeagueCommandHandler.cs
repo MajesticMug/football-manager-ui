@@ -49,22 +49,13 @@ namespace Football.Api.CommandHandlers
 
                 competition = _mapper.Map<Competition>(competitionDto);
 
-                var teams = teamDtos.Select(teamDto => _mapper.Map<Team>(teamDto)).ToList();
-
-                await _competitionRepository.SaveCompetitionAsync(competition, teams);
-
                 foreach (var teamDto in teamDtos)
                 {
                     try
                     {
-                        var team = _mapper.Map<Team>(teamDto);
-
-                        var players = (await _apiClient.GetPlayersByTeamAsync(teamDto.Id))
+                        teamDto.Squad = (await _apiClient.GetPlayersByTeamAsync(teamDto.Id))
                             .Where(squadMember =>
-                                squadMember.Role.Equals("Player", StringComparison.OrdinalIgnoreCase))
-                            .Select(dto => _mapper.Map<Player>(dto)).ToList();
-
-                        await _teamRepository.SaveTeamAsync(team.Code, players);
+                                squadMember.Role.Equals("Player", StringComparison.OrdinalIgnoreCase)).ToArray();
                     }
                     catch (RequestNumberLimitExceededException)
                     {
@@ -76,6 +67,10 @@ namespace Football.Api.CommandHandlers
                         break;
                     }
                 }
+
+                var teams = teamDtos.Select(teamDto => _mapper.Map<Team>(teamDto)).ToList();
+
+                await _competitionRepository.SaveCompetitionAsync(competition, teams);
 
                 // Unit represents a void return type in MeadiatR
                 return Unit.Value;

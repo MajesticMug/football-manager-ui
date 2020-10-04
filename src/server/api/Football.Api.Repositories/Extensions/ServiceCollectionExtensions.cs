@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Football.Api.Repositories.Implementations;
+using Football.Api.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Football.Api.Repositories.Extensions
@@ -10,7 +12,16 @@ namespace Football.Api.Repositories.Extensions
         {
             services.AddDbContext<FootballDbContext>(builder => builder.UseSqlServer(connectionString));
 
+            AddRepositories(services);
+
             return services;
+        }
+
+        private static void AddRepositories(IServiceCollection services)
+        {
+            services.AddTransient<ICompetitionRepository, EfCompetitionRepository>();
+            services.AddTransient<ITeamRepository, EfTeamRepository>();
+            services.AddTransient<IPlayerRepository, EfPlayerRepository>();
         }
     }
 }
