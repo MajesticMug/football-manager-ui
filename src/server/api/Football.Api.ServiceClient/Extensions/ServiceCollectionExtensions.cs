@@ -17,6 +17,8 @@ namespace Football.Api.ServiceClient.Extensions
                     new MediaTypeWithQualityHeaderValue("application/json"));
             });
 
+            services.AddTransient<IFootballDataApiClient, FootballDataApiClient>();
+
             return services;
         }
     }

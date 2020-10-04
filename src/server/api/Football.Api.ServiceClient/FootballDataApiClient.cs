@@ -25,14 +25,14 @@ namespace Football.Api.ServiceClient
                     leagueCode.Equals(c.Code, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public async Task<TeamDto[]> GetTeamsByCompetition(string competitionId)
+        public async Task<TeamDto[]> GetTeamsByCompetition(int competitionId)
         {
             var root = await _serviceClient.GetRootAsync<TeamsRootObject>($"competitions/{competitionId}/teams");
 
             return root.Teams ?? Array.Empty<TeamDto>();
         }
 
-        public async Task<SquadMemberDto[]> GetPlayersByTeamAsync(string teamId)
+        public async Task<SquadMemberDto[]> GetPlayersByTeamAsync(int teamId)
         {
             return (await _serviceClient.GetRootAsync<TeamDto>($"teams/{teamId}"))
                 .Squad ?? Array.Empty<SquadMemberDto>();
