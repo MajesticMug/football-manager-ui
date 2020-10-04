@@ -14,25 +14,5 @@ namespace Football.Api.Models
 
         public List<CompetitionTeam> CompetitionTeams { get; set; }
         public List<Player> Players { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is Team otherTeam)
-            {
-                return Equals(otherTeam);
-            }
-
-            return false;
-        }
-
-        protected bool Equals(Team other)
-        {
-            return Code == other.Code;
-        }
-
-        public override int GetHashCode()
-        {
-            return (Code != null ? Code.GetHashCode() : 0);
-        }
     }
 }
