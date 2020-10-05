@@ -44,7 +44,7 @@ namespace Football.Api.CommandHandlers
 
                 if (competitionDto == null)
                 {
-                    throw new LeagueNotFoundException();
+                    throw new EntityNotFoundException();
                 }
 
                 var teamDtos = await _apiClient.GetTeamsByCompetition(competitionDto.Id);

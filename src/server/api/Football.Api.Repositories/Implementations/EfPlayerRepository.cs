@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Football.Api.Models;
 using Football.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +22,11 @@ namespace Football.Api.Repositories.Implementations
                 .SelectMany(competition => competition.CompetitionTeams)
                 .SelectMany(competitionTeam => competitionTeam.Team.Players)
                 .CountAsync();
+        }
+
+        public async Task<List<Player>> GetPlayersByTeamIdAsync(int teamId)
+        {
+            return await _dbContext.Players.AsNoTracking().Where(player => player.TeamId == teamId).ToListAsync();
         }
     }
 }

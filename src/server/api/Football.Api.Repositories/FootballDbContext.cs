@@ -49,7 +49,7 @@ namespace Football.Api.Repositories
 
             modelBuilder
                 .Entity<Player>()
-                .HasOne<Team>()
+                .HasOne(player => player.Team)
                 .WithMany(team => team.Players)
                 .HasForeignKey(player => player.TeamId);
 

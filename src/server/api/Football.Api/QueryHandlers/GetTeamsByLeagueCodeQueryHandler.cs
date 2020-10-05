@@ -25,7 +25,7 @@ namespace Football.Api.QueryHandlers
 
             if (competition == null)
             {
-                throw new LeagueNotFoundException();
+                throw new EntityNotFoundException();
             }
 
             return (await _teamRepository.GetTeamsByCompetitionIdAsync(competition.Id)).ToArray();

@@ -32,7 +32,11 @@ export class NavService {
       },
       {
         name: 'Teams',
-        route: 'teams:competitionId',
+        route: 'teams',
+      },
+      {
+        name: 'Import League',
+        route: 'import-league',
       },
     ];
   }

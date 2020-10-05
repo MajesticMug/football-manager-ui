@@ -37,7 +37,7 @@ namespace Football.Api.Site
                             .AllowAnyOrigin()
                             .AllowAnyMethod()
                             .AllowAnyHeader()
-                            .WithExposedHeaders(new string[] { "Content-Disposition" });
+                            .WithExposedHeaders("Content-Disposition");
                     });
             });
 
