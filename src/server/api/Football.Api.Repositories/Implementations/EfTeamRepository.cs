@@ -34,6 +34,11 @@ namespace Football.Api.Repositories.Implementations
                 competitionIdParameter, playersParameter);
         }
 
+        public async Task<Team> GetTeamByCodeAsync(string teamCode)
+        {
+            return await _dbContext.Teams.FirstOrDefaultAsync(team => team.Code.Equals(teamCode));
+        }
+
         public async Task<List<Team>> GetTeamsByCompetitionIdAsync(int competitionId)
         {
             return await _dbContext.Competitions

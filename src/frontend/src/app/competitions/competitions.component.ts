@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Competition, CompetitionService } from '../api/index';
 
@@ -10,13 +11,16 @@ import { Competition, CompetitionService } from '../api/index';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CompetitionsComponent implements OnInit {
+  competitions$: Observable<Competition[]>;
+  displayedColumns: string[] = ['id', 'code', 'name', 'areaName', 'actions'];
 
-  testCompetitions$: Observable<Competition[]>;
-
-  constructor(private competitionService: CompetitionService) { }
+  constructor(private competitionService: CompetitionService, private router: Router) {}
 
   ngOnInit(): void {
-    this.testCompetitions$ = this.competitionService.competitionsGet();
+    this.competitions$ = this.competitionService.competitionsGet();
   }
 
+  viewTeam(leagueCode: string): void {
+    this.router.navigate([`/teams/${leagueCode}`]);
+  }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Football.Api.Models;
 using Football.Api.Queries;
 using Football.Api.ResponseModels;
 using MediatR;
@@ -26,6 +27,14 @@ namespace Football.Api.Site.Controllers
             {
                 LeagueCode = leagueCode
             }));
+        }
+
+        [HttpGet("{teamCode}")]
+        [ProducesResponseType(200, Type = typeof(Player[]))]
+        [ProducesResponseType(404, Type = typeof(MessageResponse))]
+        public async Task<IActionResult> GetPlayersByTeamCode([FromRoute] string teamCode)
+        {
+            return Ok(await _mediator.Send(new GetPlayersByTeamCodeQuery {TeamCode = teamCode}));
         }
     }
 }

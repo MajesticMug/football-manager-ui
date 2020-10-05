@@ -1,1 +1,53 @@
-<pre>{{ (testCompetitions$ | async) | json }}</pre>
+<div class="container">
+  <div class="container-header">
+    <h2>Competitions</h2>
+  </div>
+
+  <ng-container *ngIf="competitions$ | async as competitions; else loadingTemplate">
+    <div class="container-tableContainer">
+      <table mat-table [dataSource]="competitions" class="container-table mat-elevation-z8">
+
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Code Column -->
+        <ng-container matColumnDef="code">
+          <th mat-header-cell *matHeaderCellDef> Code </th>
+          <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Area Name Column -->
+        <ng-container matColumnDef="areaName">
+          <th mat-header-cell *matHeaderCellDef> Area Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.areaName}} </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button color="primary" (click)="viewTeam(element.code)">View Team</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </ng-container>
+
+  <ng-template #loadingTemplate>
+    <div class="container-loading">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</div>
