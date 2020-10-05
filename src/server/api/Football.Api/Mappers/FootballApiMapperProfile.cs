@@ -4,7 +4,7 @@ using Football.Api.ServiceClient.Dtos;
 
 namespace Football.Api.Mappers
 {
-    internal class FootballApiMapperProfile : Profile
+    public class FootballApiMapperProfile : Profile
     {
         public FootballApiMapperProfile()
         {
